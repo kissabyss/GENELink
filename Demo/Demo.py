@@ -1,14 +1,23 @@
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
 from torch.utils.data import DataLoader
 import torch
 import torch.nn.functional as F
 from torch.optim import Adam
-from scGNN import GENELink
+# from scGNN import GENELink
+from Code.scGNN import GENELink
 from torch.optim.lr_scheduler import StepLR
 import scipy.sparse as sp
-from utils import scRNADataset, load_data, adj2saprse_tensor, Evaluation,  Network_Statistic
+# from utils import scRNADataset, load_data, adj2saprse_tensor, Evaluation,  Network_Statistic
+from Code.utils import scRNADataset, load_data, adj2saprse_tensor, Evaluation,  Network_Statistic
 import pandas as pd
 from torch.utils.tensorboard import SummaryWriter
-from PytorchTools import EarlyStopping
+# from PytorchTools import EarlyStopping
+from Code.PytorchTools import EarlyStopping
 import numpy as np
 import random
 import glob
@@ -60,10 +69,10 @@ def embed2file(tf_embed,tg_embed,gene_file,tf_path,target_path):
 
 
 
-density = Network_Statistic(data_type,num,net_type)
-exp_file = '.../Demo/'+data_type+'/TFs+'+str(num)+'/BL--ExpressionData.csv'
-tf_file = '.../Demo/'+data_type+'/TFs+'+str(num)+'/TF.csv'
-target_file = '.../Demo/'+data_type+'/TFs+'+str(num)+'/Target.csv'
+density = Network_Statistic(data_type,num,net_type='Non-Specific')
+exp_file = './Demo/'+data_type+'/TFs+'+str(num)+'/BL--ExpressionData.csv'
+tf_file = './Demo/'+data_type+'/TFs+'+str(num)+'/TF.csv'
+target_file = './Demo/'+data_type+'/TFs+'+str(num)+'/Target.csv'
 
 data_input = pd.read_csv(exp_file,index_col=0)
 loader = load_data(data_input)
@@ -77,9 +86,9 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 data_feature = feature.to(device)
 tf = tf.to(device)
 
-train_file = '.../Demo/Train_validation_test/'+data_type+' '+str(num)+'/Train_set.csv'
-test_file = '.../Demo/Train_validation_test/'+data_type+' '+str(num)+'/Test_set.csv'
-val_file = '.../Demo/Train_validation_test/'+data_type+' '+str(num)+'/Validation_set.csv'
+train_file = './Demo/Train_validation_test/'+data_type+' '+str(num)+'/Train_set.csv'
+test_file = './Demo/Train_validation_test/'+data_type+' '+str(num)+'/Test_set.csv'
+val_file = './Demo/Train_validation_test/'+data_type+' '+str(num)+'/Validation_set.csv'
 
 
 tf_embed_path = r'Result/'+data_type+' '+str(num)+'/Channel1.csv'
