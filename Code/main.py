@@ -83,7 +83,7 @@ train_data = pd.read_csv(train_file, index_col=0).values
 validation_data = pd.read_csv(val_file, index_col=0).values
 
 
-train_load = scRNADataset(train_data, feature.shape[0], flag=arg- Pytorch == 1.6.0.flag)
+train_load = scRNADataset(train_data, feature.shape[0], flag=args.flag)
 adj = train_load.Adj_Generate(tf,loop=args.loop)
 
 
